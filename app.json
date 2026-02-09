@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "link2cart",
+    "slug": "link2cart",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#007AFF"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.link2cart.app"
+    },
+    "android": {
+      "package": "com.link2cart.app"
+    }
+  }
+}
