@@ -7,402 +7,415 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  ScrollView
+  StatusBar
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ProductsScreen({ navigation }) {
-  const [activeTab, setActiveTab] = useState('products'); // 'products' or 'collections'
+  const [activeTab, setActiveTab] = useState('Items');
   const [searchQuery, setSearchQuery] = useState('');
   
   const products = [
     {
       id: '1',
       name: 'Product Name',
-      price: '$ 199.99',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      price: '1500',
       stock: '10000',
-      image: 'https://i.imgur.com/KXUJM8e.png',
+      image: 'https://via.placeholder.com/100',
     },
     {
       id: '2',
       name: 'Product Name',
-      price: '$ 199.99',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      price: '1500',
       stock: '10000',
-      image: 'https://i.imgur.com/KXUJM8e.png',
+      image: 'https://via.placeholder.com/100',
     },
     {
       id: '3',
       name: 'Product Name',
-      price: '$ 199.99',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      price: '1500',
       stock: '10000',
-      image: 'https://i.imgur.com/KXUJM8e.png',
+      image: 'https://via.placeholder.com/100',
     },
-  ];
-
-  const collections = [
-    { id: '1', name: 'Louis Vuitton', logo: '🏢' },
-    { id: '2', name: 'IBM', logo: '💼' },
-    { id: '3', name: 'The Walt Disney Company', logo: '🏰' },
-    { id: '4', name: 'Louis Vuitton', logo: '👜' },
-    { id: '5', name: 'Apple', logo: '🍎' },
-    { id: '6', name: 'The Walt Disney Company', logo: '🎬' },
-    { id: '7', name: 'Ferrari', logo: '🏎️' },
-    { id: '8', name: 'eBay', logo: '🛒' },
-    { id: '9', name: "McDonald's", logo: '🍔' },
+    {
+      id: '4',
+      name: 'Product Name',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      price: '1500',
+      stock: '10000',
+      image: 'https://via.placeholder.com/100',
+    },
+    {
+      id: '5',
+      name: 'Product Name',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      price: '1500',
+      stock: '10000',
+      image: 'https://via.placeholder.com/100',
+    },
   ];
 
   const renderProductItem = ({ item }) => (
     <View style={styles.productCard}>
       <View style={styles.productImageContainer}>
-        <Image source={{ uri: item.image }} style={styles.productImage} resizeMode="contain" />
+        <Image 
+          source={{ uri: item.image }} 
+          style={styles.productImage} 
+          resizeMode="cover" 
+        />
       </View>
       
       <View style={styles.productDetails}>
         <Text style={styles.productName}>{item.name}</Text>
-        <Text style={styles.productPrice}>{item.price}</Text>
-        <Text style={styles.productStock}>{item.stock}</Text>
+        <Text style={styles.productDescription} numberOfLines={2}>
+          {item.description}
+        </Text>
+        <Text style={styles.productStock}>In Stock : {item.stock}</Text>
+        <Text style={styles.productPrice}>₹ {item.price}</Text>
       </View>
 
       <View style={styles.productActions}>
-        <TouchableOpacity style={styles.actionButton}>
-          <Text style={styles.actionIcon}>☰</Text>
+        <TouchableOpacity style={styles.editButton}>
+          <Text style={styles.editIcon}>✏</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton}>
-          <Text style={styles.actionIcon}>👁️‍🗨️</Text>
+        <TouchableOpacity style={styles.deleteButton}>
+          <Text style={styles.deleteIcon}>🗑</Text>
         </TouchableOpacity>
       </View>
-    </View>
-  );
-
-  const renderCollectionItem = ({ item }) => (
-    <View style={styles.collectionCard}>
-      <View style={styles.collectionLogo}>
-        <Text style={styles.collectionLogoText}>{item.logo}</Text>
-      </View>
-      <Text style={styles.collectionName}>{item.name}</Text>
     </View>
   );
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      {/* Header */}
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#1A1A1A" />
+      {/* Fixed Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Business Name</Text>
-        <TouchableOpacity style={styles.notificationButton}>
-          <Text style={styles.notificationIcon}>🔔</Text>
-        </TouchableOpacity>
+        <View style={styles.storeLogo}>
+          <Image 
+            source={{ uri: 'https://via.placeholder.com/60' }}
+            style={styles.logoImage}
+          />
+        </View>
+        <View style={styles.storeInfo}>
+          <Text style={styles.storeName}>Cubies Apparel</Text>
+          <Text style={styles.storeUrl}>cubiesapparel.sellify.cloud</Text>
+        </View>
       </View>
 
-      {/* Tabs */}
-      <View style={styles.tabsContainer}>
+      {/* Scrollable Content */}
+      <View style={styles.contentContainer}>
+        {/* Tabs */}
+        <View style={styles.tabsContainer}>
         <TouchableOpacity
-          style={[styles.tab, activeTab === 'products' && styles.activeTab]}
-          onPress={() => setActiveTab('products')}
+          style={[styles.tab, activeTab === 'Items' && styles.activeTab]}
+          onPress={() => setActiveTab('Items')}
         >
-          <Text style={[styles.tabText, activeTab === 'products' && styles.activeTabText]}>
-            Products
+          <Text style={[styles.tabText, activeTab === 'Items' && styles.activeTabText]}>
+            Items
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.tab, activeTab === 'collections' && styles.activeTab]}
-          onPress={() => setActiveTab('collections')}
+          style={[styles.tab, activeTab === 'Groups' && styles.activeTab]}
+          onPress={() => setActiveTab('Groups')}
         >
-          <Text style={[styles.tabText, activeTab === 'collections' && styles.activeTabText]}>
-            Collections
+          <Text style={[styles.tabText, activeTab === 'Groups' && styles.activeTabText]}>
+            Groups
           </Text>
         </TouchableOpacity>
       </View>
 
       {/* Search Bar */}
       <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search Products"
-          placeholderTextColor="#999"
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-        <Text style={styles.searchIcon}>🔍</Text>
+        <View style={styles.searchBar}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search Items"
+            placeholderTextColor="#2F7D6D"
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+          <Text style={styles.searchIcon}>🔍</Text>
+        </View>
+        <TouchableOpacity style={styles.addButton}>
+          <Text style={styles.addButtonText}>+</Text>
+        </TouchableOpacity>
       </View>
 
-      {/* Content */}
-      {activeTab === 'products' ? (
-        <View style={styles.content}>
-          {/* Action Buttons */}
-          <View style={styles.actionBar}>
-            <TouchableOpacity style={styles.gridButton}>
-              <Text style={styles.gridIcon}>⊞</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.importButton}>
-              <Text style={styles.importButtonText}>Import / Export</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.categoryButton}>
-              <Text style={styles.categoryButtonText}>Non catagoried</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Products List */}
-          <FlatList
-            data={products}
-            renderItem={renderProductItem}
-            keyExtractor={item => item.id}
-            contentContainerStyle={styles.productsList}
-          />
-        </View>
-      ) : (
-        <View style={styles.content}>
-          {/* Menu Icon */}
-          <TouchableOpacity style={styles.menuButton}>
-            <Text style={styles.menuIcon}>☰</Text>
-          </TouchableOpacity>
-
-          {/* Collections Grid */}
-          <FlatList
-            data={collections}
-            renderItem={renderCollectionItem}
-            keyExtractor={item => item.id}
-            numColumns={3}
-            contentContainerStyle={styles.collectionsList}
-          />
-        </View>
-      )}
-
-      {/* Floating Add Button */}
-      <TouchableOpacity style={styles.floatingButton}>
-        <Text style={styles.floatingButtonText}>+</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+      {/* Products List */}
+      <FlatList
+        data={products}
+        renderItem={renderProductItem}
+        keyExtractor={item => item.id}
+        contentContainerStyle={styles.productsList}
+        showsVerticalScrollIndicator={false}
+        style={styles.listContainer}
+      />
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
   },
   header: {
-    backgroundColor: '#000',
+    backgroundColor: '#1A1A1A',
     paddingHorizontal: 20,
-    paddingVertical: 15,
+    paddingTop: 40,
+    paddingBottom: 13,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    shadowColor: '#000000',
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 4,
   },
-  headerTitle: {
+  contentContainer: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  listContainer: {
+    flex: 1,
+  },
+  storeLogo: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    backgroundColor: '#FAFAFA',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  logoImage: {
+    width: '100%',
+    height: '100%',
+  },
+  storeInfo: {
+    marginLeft: 13,
+  },
+  storeName: {
+    fontFamily: 'Urbanist',
     fontSize: 20,
+    fontWeight: '700',
+    lineHeight: 28,
+    letterSpacing: -0.8,
+    color: '#F9FAFB',
+  },
+  storeUrl: {
+    fontFamily: 'Urbanist',
+    fontSize: 15,
     fontWeight: '600',
-    color: '#fff',
-  },
-  notificationButton: {
-    padding: 5,
-  },
-  notificationIcon: {
-    fontSize: 24,
-    color: '#fff',
+    lineHeight: 21,
+    letterSpacing: 0.15,
+    color: '#F9FAFB',
+    marginTop: 0,
   },
   tabsContainer: {
     flexDirection: 'row',
     paddingHorizontal: 20,
-    paddingTop: 20,
-    gap: 8,
+    paddingTop: 16,
+    gap: 5,
+    backgroundColor: '#FFFFFF',
   },
   tab: {
-    flex: 1,
-    paddingVertical: 12,
-    borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 4,
+    width: 143,
+    height: 40,
+    backgroundColor: '#FAFAFA',
+    borderRadius: 5,
     alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000000',
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 4,
   },
   activeTab: {
-    backgroundColor: '#000',
+    backgroundColor: '#0742A0',
   },
   tabText: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#000',
+    fontFamily: 'Urbanist',
+    fontSize: 15,
+    fontWeight: '600',
+    lineHeight: 21,
+    letterSpacing: 0.15,
+    textAlign: 'center',
+    color: '#1A1A1A',
   },
   activeTabText: {
-    color: '#fff',
+    color: '#FAFAFA',
   },
   searchContainer: {
-    marginHorizontal: 20,
-    marginTop: 15,
+    marginHorizontal: 15,
+    marginTop: 11,
+    marginBottom: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 25,
+    gap: 17,
+  },
+  searchBar: {
+    flex: 1,
+    height: 45,
+    backgroundColor: '#FAFAFA',
+    borderRadius: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingHorizontal: 15,
-    paddingVertical: 10,
-    backgroundColor: '#fff',
+    shadowColor: '#000000',
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 4,
   },
   searchInput: {
     flex: 1,
-    fontSize: 16,
-    color: '#000',
+    fontFamily: 'Urbanist',
+    fontSize: 14,
+    fontWeight: '500',
+    lineHeight: 20,
+    letterSpacing: 0.14,
+    textAlign: 'left',
+    color: '#2F7D6D',
+    paddingVertical: 0,
   },
   searchIcon: {
-    fontSize: 20,
-    color: '#999',
-    marginLeft: 10,
+    fontSize: 18,
+    color: '#2F7D6D',
   },
-  content: {
-    flex: 1,
-    paddingHorizontal: 20,
-  },
-  actionBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 20,
-    gap: 10,
-  },
-  gridButton: {
+  addButton: {
     width: 45,
     height: 45,
+    borderRadius: 0,
+    backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 4,
   },
-  gridIcon: {
-    fontSize: 20,
-  },
-  importButton: {
-    flex: 1,
-    backgroundColor: '#000',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    alignItems: 'center',
-  },
-  importButtonText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  categoryButton: {
-    backgroundColor: '#000',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    alignItems: 'center',
-  },
-  categoryButtonText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '500',
+  addButtonText: {
+    fontSize: 32,
+    color: '#1A1A1A',
+    fontWeight: '300',
   },
   productsList: {
-    paddingTop: 20,
+    paddingHorizontal: 16,
     paddingBottom: 100,
+    gap: 11,
   },
   productCard: {
+    width: '100%',
+    height: 121,
     flexDirection: 'row',
-    backgroundColor: '#f5f5f5',
-    borderRadius: 8,
-    padding: 15,
-    marginBottom: 10,
+    backgroundColor: '#FAFAFA',
+    borderRadius: 10,
+    paddingHorizontal: 11,
+    paddingVertical: 0,
+    marginBottom: 11,
     alignItems: 'center',
+    shadowColor: '#000000',
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 4,
   },
   productImageContainer: {
-    width: 80,
-    height: 80,
-    backgroundColor: '#000',
-    borderRadius: 8,
+    width: 100,
+    height: 100,
+    backgroundColor: '#E8E8E8',
+    borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 15,
+    overflow: 'hidden',
+    shadowColor: '#000000',
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 4,
   },
   productImage: {
-    width: 70,
-    height: 70,
-  },
-  productImagePlaceholder: {
-    fontSize: 40,
+    width: '100%',
+    height: '100%',
   },
   productDetails: {
     flex: 1,
+    paddingLeft: 9,
+    paddingRight: 5,
+    justifyContent: 'flex-start',
+    paddingTop: 7,
   },
   productName: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#000',
-    marginBottom: 5,
+    fontFamily: 'Urbanist',
+    fontSize: 20,
+    fontWeight: '700',
+    lineHeight: 28,
+    letterSpacing: -0.8,
+    textAlign: 'left',
+    color: '#1A1A1A',
+    marginBottom: 0,
   },
-  productPrice: {
-    fontSize: 14,
-    color: '#000',
-    marginBottom: 5,
+  productDescription: {
+    fontFamily: 'Nunito Sans',
+    fontSize: 10,
+    fontWeight: '600',
+    lineHeight: 14,
+    letterSpacing: 0.1,
+    color: '#1A1A1A',
+    marginTop: 0,
+    height: 32,
   },
   productStock: {
+    fontFamily: 'Urbanist',
     fontSize: 14,
-    color: '#000',
+    fontWeight: '900',
+    lineHeight: 20,
+    letterSpacing: -0.7,
+    color: '#1A1A1A',
+    marginTop: 3,
+  },
+  productPrice: {
+    fontFamily: 'Urbanist',
+    fontSize: 14,
+    fontWeight: '900',
+    lineHeight: 20,
+    letterSpacing: -0.7,
+    color: '#1A1A1A',
+    marginTop: 0,
   },
   productActions: {
-    flexDirection: 'row',
-    gap: 10,
-  },
-  actionButton: {
-    padding: 5,
-  },
-  actionIcon: {
-    fontSize: 20,
-  },
-  menuButton: {
-    marginTop: 20,
-    marginBottom: 10,
-  },
-  menuIcon: {
-    fontSize: 24,
-  },
-  collectionsList: {
-    paddingTop: 20,
-    paddingBottom: 100,
-  },
-  collectionCard: {
-    flex: 1,
-    alignItems: 'center',
-    marginBottom: 25,
-    marginHorizontal: 5,
-  },
-  collectionLogo: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: '#f5f5f5',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  collectionLogoText: {
-    fontSize: 35,
-  },
-  collectionName: {
-    fontSize: 11,
-    color: '#000',
-    textAlign: 'center',
-  },
-  floatingButton: {
+    flexDirection: 'column',
+    gap: 8,
     position: 'absolute',
-    bottom: 90,
-    right: 20,
-    width: 60,
-    height: 60,
-    borderRadius: 10,
-    backgroundColor: '#888',
+    right: 11,
+    bottom: 14,
+  },
+  editButton: {
+    width: 16,
+    height: 16,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
   },
-  floatingButtonText: {
-    fontSize: 32,
-    color: '#fff',
-    fontWeight: '300',
+  editIcon: {
+    fontSize: 16,
+    color: '#1A1A1A',
+  },
+  deleteButton: {
+    width: 22,
+    height: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  deleteIcon: {
+    fontSize: 16,
+    color: '#1A1A1A',
   },
 });

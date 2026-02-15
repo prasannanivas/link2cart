@@ -6,62 +6,105 @@ import {
   FlatList,
   TouchableOpacity,
   TextInput,
-  ScrollView
+  ScrollView,
+  Image,
+  StatusBar
 } from 'react-native';
+import Colors from '../constants/colors';
 
 export default function OrdersScreen({ navigation }) {
-  const [selectedTab, setSelectedTab] = useState('NEW ORDERS');
+  const [selectedTab, setSelectedTab] = useState('New orders');
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   
-  const tabs = ['NEW ORDERS', 'Confirmed', 'Delivered'];
+  const tabs = ['New orders', 'Confirmed', 'Dispatched', 'Delivered'];
   const filters = ['All', 'Prepaid', 'Express', 'Partial COD'];
   
   const orders = [
     {
       id: '1',
       orderNumber: 'ORDER#5t435435F',
-      fullName: 'Full Name',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veni...',
-      price: '105.33',
+      customerName: 'Mrinal',
+      description: 'Mrinal Placed an order for $ 100.00 on Jan 5, 2026',
+      price: '₹ 105.33',
       date: 'Dec 30, 2019 05:18',
+      badges: ['Prepaid Express', 'Ordered'],
     },
     {
       id: '2',
       orderNumber: 'ORDER#5t435435F',
-      fullName: 'Full Name',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veni...',
-      price: '105.33',
+      customerName: 'Mrinal',
+      description: 'Mrinal Placed an order for $ 100.00 on Jan 5, 2026',
+      price: '₹ 105.33',
       date: 'Dec 30, 2019 05:18',
+      badges: ['Prepaid Express', 'Ordered'],
     },
     {
       id: '3',
       orderNumber: 'ORDER#5t435435F',
-      fullName: 'Full Name',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veni...',
-      price: '105.33',
+      customerName: 'Mrinal',
+      description: 'Mrinal Placed an order for $ 100.00 on Jan 5, 2026',
+      price: '₹ 105.33',
       date: 'Dec 30, 2019 05:18',
+      badges: ['Prepaid Express', 'Ordered'],
+    },
+    {
+      id: '4',
+      orderNumber: 'ORDER#5t435435F',
+      customerName: 'Mrinal',
+      description: 'Mrinal Placed an order for $ 100.00 on Jan 5, 2026',
+      price: '₹ 105.33',
+      date: 'Dec 30, 2019 05:18',
+      badges: ['Prepaid Express', 'Ordered'],
     },
   ];
 
   const renderOrder = ({ item }) => (
     <View style={styles.orderCard}>
       <View style={styles.orderHeader}>
-        <Text style={styles.orderNumber}>{item.orderNumber}</Text>
+        <View style={styles.orderNumberContainer}>
+          <Text style={styles.orderNumber}>{item.orderNumber}</Text>
+        </View>
         <Text style={styles.orderDate}>{item.date}</Text>
       </View>
       
-      <Text style={styles.fullName}>{item.fullName}</Text>
-      <Text style={styles.description}>{item.description}</Text>
+      <View style={styles.customerRow}>
+        <View style={styles.customerAvatar}>
+          <Text style={styles.customerAvatarText}>{item.customerName[0]}</Text>
+        </View>
+        <View style={styles.customerInfo}>
+          <Text style={styles.customerName}>{item.customerName}</Text>
+          <Text style={styles.description} numberOfLines={1}>{item.description}</Text>
+        </View>
+      </View>
       
-      <View style={styles.orderFooter}>
-        <Text style={styles.price}>{item.price}</Text>
-        <View style={styles.actionButtons}>
-          <TouchableOpacity style={styles.actionBtn}>
-            <Text style={styles.actionBtnText}>I</Text>
+      <View style={styles.bottomRow}>
+        <View style={styles.priceAndBadges}>
+          <Text style={styles.priceText}>{item.price}</Text>
+          <View style={styles.badgesRow}>
+            {item.badges.map((badge, index) => (
+              <View key={index} style={[
+                styles.badge,
+                index === 0 ? styles.badgePrimary : styles.badgeSecondary
+              ]}>
+                <Text style={styles.badgeText}>{badge}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+        
+        <View style={styles.orderFooter}>
+          <TouchableOpacity style={styles.actionIcon} activeOpacity={0.7}>
+            <Text style={styles.actionIconText}>🔔</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionBtn}>
-            <Text style={styles.actionBtnText}>W</Text>
+          <TouchableOpacity style={styles.actionIcon} activeOpacity={0.7}>
+            <Text style={styles.actionIconText}>👤</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionIcon} activeOpacity={0.7}>
+            <Text style={styles.actionIconText}>📞</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionIcon} activeOpacity={0.7}>
+            <Text style={styles.actionIconText}>⚙️</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -70,47 +113,56 @@ export default function OrdersScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* Store Dropdown and Payment Banner */}
-      <View style={styles.topSection}>
-        <TouchableOpacity style={styles.storeDropdown}>
-          <Text style={styles.storeText}>Store 1</Text>
-          <Text style={styles.dropdownIcon}>▼</Text>
-        </TouchableOpacity>
+      <StatusBar barStyle={Colors.statusBarText} backgroundColor={Colors.backgroundDark} />
+      {/* Fixed Header */}
+      <View style={styles.header}>
+        <View style={styles.storeLogo}>
+          <Image 
+            source={{ uri: 'https://via.placeholder.com/50' }}
+            style={styles.logoImage}
+          />
+        </View>
+        <View style={styles.storeInfo}>
+          <Text style={styles.storeName}>Cubies Apparel</Text>
+          <Text style={styles.storeUrl}>cubiesapparel.sellify.cloud</Text>
+        </View>
       </View>
 
-      <TouchableOpacity style={styles.paymentBanner}>
-        <View style={styles.paymentIcon}>
-          <Text style={styles.iconEmoji}>💰</Text>
-        </View>
-        <Text style={styles.paymentText}>payment And Settelement</Text>
-        <Text style={styles.arrowIcon}>→</Text>
-      </TouchableOpacity>
+      {/* Content Area */}
+      <View style={styles.contentContainer}>
+        {/* Tabs */}
+        <ScrollView 
+          horizontal 
+          showsHorizontalScrollIndicator={false}
+          style={styles.tabsContainer}
+          contentContainerStyle={styles.tabsContent}
+        >
+          {tabs.map((tab) => (
+            <TouchableOpacity
+              key={tab}
+              style={[styles.tab, selectedTab === tab && styles.activeTab]}
+              onPress={() => setSelectedTab(tab)}
+            >
+              <Text style={[styles.tabText, selectedTab === tab && styles.activeTabText]}>
+                {tab}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
 
       {/* Search Bar */}
       <View style={styles.searchContainer}>
         <Text style={styles.searchIcon}>🔍</Text>
         <TextInput
           style={styles.searchInput}
-          placeholder="Search by products or buyer name"
+          placeholder="Search Items"
           placeholderTextColor="#999"
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
-      </View>
-
-      {/* Tabs */}
-      <View style={styles.tabsContainer}>
-        {tabs.map((tab) => (
-          <TouchableOpacity
-            key={tab}
-            style={[styles.tab, selectedTab === tab && styles.activeTab]}
-            onPress={() => setSelectedTab(tab)}
-          >
-            <Text style={[styles.tabText, selectedTab === tab && styles.activeTabText]}>
-              {tab}
-            </Text>
-          </TouchableOpacity>
-        ))}
+        <TouchableOpacity style={styles.userIcon}>
+          <Text style={styles.userIconText}>👤</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Filters */}
@@ -118,6 +170,7 @@ export default function OrdersScreen({ navigation }) {
         horizontal 
         showsHorizontalScrollIndicator={false}
         style={styles.filtersContainer}
+        contentContainerStyle={styles.filtersContent}
       >
         {filters.map((filter) => (
           <TouchableOpacity
@@ -130,12 +183,6 @@ export default function OrdersScreen({ navigation }) {
             </Text>
           </TouchableOpacity>
         ))}
-        <TouchableOpacity style={styles.iconBtn}>
-          <Text style={styles.iconBtnText}>☰</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconBtn}>
-          <Text style={styles.iconBtnText}>↓</Text>
-        </TouchableOpacity>
       </ScrollView>
 
       {/* Orders List */}
@@ -145,7 +192,9 @@ export default function OrdersScreen({ navigation }) {
         keyExtractor={item => item.id}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
+        style={styles.listContainer}
       />
+      </View>
     </View>
   );
 }
@@ -153,226 +202,268 @@ export default function OrdersScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: Colors.background,
   },
-  topSection: {
-    backgroundColor: '#000000',
+  header: {
+    backgroundColor: Colors.backgroundDark,
     paddingHorizontal: 20,
     paddingTop: 50,
-    paddingBottom: 20,
-  },
-  storeDropdown: {
+    paddingBottom: 15,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#9CA3AF',
-    borderRadius: 25,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    alignSelf: 'flex-start',
-  },
-  storeText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600',
-    marginRight: 10,
-    fontFamily: 'Urbanist',
-  },
-  dropdownIcon: {
-    color: '#FFFFFF',
-    fontSize: 12,
-  },
-  paymentBanner: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    marginHorizontal: 20,
-    marginTop: 35,
-    marginBottom: 20,
-    padding: 18,
-    borderRadius: 16,
-    shadowColor: '#000',
+    shadowColor: Colors.shadow,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
   },
-  paymentIcon: {
+  contentContainer: {
+    flex: 1,
+  },
+  listContainer: {
+    flex: 1,
+  },
+  storeLogo: {
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#FEF3C7',
+    backgroundColor: Colors.cardBackground,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 15,
+    overflow: 'hidden',
   },
-  iconEmoji: {
-    fontSize: 24,
+  logoImage: {
+    width: '100%',
+    height: '100%',
   },
-  paymentText: {
-    flex: 1,
-    fontSize: 18,
+  storeInfo: {
+    marginLeft: 12,
+  },
+  storeName: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: Colors.textLight,
+  },
+  storeUrl: {
+    fontSize: 12,
+    color: '#888888',
+    marginTop: 2,
+  },
+  tabsContainer: {
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: Colors.background,
+    maxHeight: 50,
+  },
+  tabsContent: {
+    gap: 6,
+  },
+  tab: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 16,
+    backgroundColor: Colors.transparent,
+    maxHeight: 30,
+  },
+  activeTab: {
+    backgroundColor: Colors.primary,
+  },
+  tabText: {
+    fontSize: 11,
+    color: Colors.textSecondary,
+    fontWeight: '500',
+  },
+  activeTabText: {
+    color: Colors.textLight,
     fontWeight: '600',
-    color: '#000000',
-    fontFamily: 'Urbanist',
-  },
-  arrowIcon: {
-    fontSize: 24,
-    color: '#000000',
   },
   searchContainer: {
+    marginHorizontal: 20,
+    marginTop: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#E5E7EB',
-    marginHorizontal: 20,
-    marginBottom: 20,
-    paddingHorizontal: 15,
-    paddingVertical: 14,
-    borderRadius: 12,
+    backgroundColor: Colors.cardBackground,
+    borderRadius: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    shadowColor: Colors.shadow,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
   },
   searchIcon: {
-    fontSize: 20,
-    marginRight: 10,
+    fontSize: 14,
+    marginRight: 6,
   },
   searchInput: {
     flex: 1,
-    fontSize: 16,
-    color: '#000000',
-    fontFamily: 'Urbanist',
+    fontSize: 12,
+    color: Colors.textPrimary,
   },
-  tabsContainer: {
-    flexDirection: 'row',
-    paddingHorizontal: 20,
-    marginBottom: 20,
-    gap: 8,
-  },
-  tab: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 20,
-    backgroundColor: 'transparent',
-  },
-  activeTab: {
-    backgroundColor: '#EEF2FF',
-  },
-  tabText: {
-    fontSize: 14,
-    color: '#6B7280',
-    fontWeight: '500',
-    fontFamily: 'Urbanist',
-  },
-  activeTabText: {
-    color: '#4F46E5',
-    fontWeight: '600',
-  },
-  filtersContainer: {
-    paddingHorizontal: 20,
-    marginBottom: 20,
-  },
-  filterBtn: {
-    backgroundColor: '#000000',
-    borderRadius: 20,
-    paddingVertical: 8,
-    paddingHorizontal: 18,
-    marginRight: 8,
-  },
-  activeFilter: {
-    backgroundColor: '#000000',
-  },
-  filterText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '500',
-    fontFamily: 'Urbanist',
-  },
-  activeFilterText: {
-    fontWeight: '600',
-  },
-  iconBtn: {
-    width: 36,
-    height: 36,
-    backgroundColor: '#000000',
-    borderRadius: 18,
+  userIcon: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: Colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 8,
   },
-  iconBtnText: {
-    color: '#FFFFFF',
-    fontSize: 18,
+  userIconText: {
+    fontSize: 14,
+  },
+  filtersContainer: {
+    marginTop: 8,
+    maxHeight: 40,
+  },
+  filtersContent: {
+    paddingHorizontal: 20,
+    gap: 5,
+  },
+  filterBtn: {
+    backgroundColor: '#F3F4F6',
+    borderRadius: 14,
+    paddingVertical: 5,
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: 'transparent',
+    maxHeight: 28,
+  },
+  activeFilter: {
+    backgroundColor: Colors.primaryLight,
+    borderColor: Colors.primary,
+  },
+  filterText: {
+    color: Colors.textSecondary,
+    fontSize: 11,
+    fontWeight: '500',
+  },
+  activeFilterText: {
+    color: Colors.primary,
+    fontWeight: '700',
   },
   listContent: {
     paddingHorizontal: 20,
-    paddingBottom: 20,
+    paddingTop: 10,
+    paddingBottom: 100,
   },
   orderCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 15,
-    shadowColor: '#000',
+    backgroundColor: Colors.cardBackground,
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+    shadowColor: Colors.shadow,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
+    shadowRadius: 4,
+    elevation: 2,
+    borderLeftWidth: 3,
+    borderLeftColor: Colors.primary,
   },
   orderHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 6,
+  },
+  orderNumberContainer: {
+    flex: 1,
   },
   orderNumber: {
-    fontSize: 14,
-    color: '#9CA3AF',
-    fontFamily: 'Urbanist',
+    fontSize: 11,
+    color: Colors.primary,
+    fontWeight: '700',
   },
   orderDate: {
-    fontSize: 14,
-    color: '#000000',
-    fontWeight: '600',
-    fontFamily: 'Urbanist',
+    fontSize: 10,
+    color: Colors.textTertiary,
+    fontWeight: '500',
   },
-  fullName: {
-    fontSize: 16,
+  customerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 6,
+    gap: 8,
+  },
+  customerAvatar: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: Colors.primaryLight,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  customerAvatarText: {
+    fontSize: 13,
     fontWeight: '700',
-    color: '#000000',
-    marginBottom: 8,
-    fontFamily: 'Urbanist',
+    color: Colors.primary,
+  },
+  customerInfo: {
+    flex: 1,
+  },
+  customerName: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: Colors.textPrimary,
+    marginBottom: 1,
   },
   description: {
-    fontSize: 13,
-    color: '#6B7280',
-    lineHeight: 20,
-    marginBottom: 15,
-    fontFamily: 'Urbanist',
+    fontSize: 11,
+    color: Colors.textTertiary,
+    lineHeight: 14,
   },
-  orderFooter: {
+  bottomRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  price: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#000000',
-    fontFamily: 'Urbanist',
-  },
-  actionButtons: {
+  priceAndBadges: {
+    flex: 1,
     flexDirection: 'row',
-    gap: 8,
+    alignItems: 'center',
+    gap: 6,
   },
-  actionBtn: {
-    width: 42,
-    height: 42,
-    backgroundColor: '#E5E7EB',
+  priceText: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: Colors.primary,
+  },
+  badgesRow: {
+    flexDirection: 'row',
+    gap: 3,
+  },
+  badge: {
     borderRadius: 8,
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+  },
+  badgePrimary: {
+    backgroundColor: Colors.success,
+  },
+  badgeSecondary: {
+    backgroundColor: Colors.warning,
+  },
+  badgeText: {
+    color: Colors.textLight,
+    fontSize: 9,
+    fontWeight: '700',
+  },
+  orderFooter: {
+    flexDirection: 'row',
+    gap: 4,
+  },
+  actionIcon: {
+    width: 28,
+    height: 28,
+    backgroundColor: Colors.iconBackground,
+    borderRadius: 14,
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: Colors.border,
   },
-  actionBtnText: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#000000',
-    fontFamily: 'Urbanist',
+  actionIconText: {
+    fontSize: 12,
   },
 });

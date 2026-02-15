@@ -32,18 +32,42 @@ function HomeTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#000000',
+        tabBarActiveTintColor: '#0A84FF',
         tabBarInactiveTintColor: '#8E8E93',
         headerShown: false,
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          backgroundColor: '#1C1C1E',
+          borderTopWidth: 0,
+          elevation: 0,
+          height: 65,
+          paddingBottom: 10,
+          paddingTop: 10,
+          borderRadius: 399,
+          marginHorizontal: 20,
+          marginBottom: 20,
+          position: 'absolute',
+        },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: '600',
+        },
       }}
     >
       <Tab.Screen 
         name="Main" 
         component={MainScreen}
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <HomeIcon color={color} size={size} />
+          title: 'Store',
+          tabBarIcon: ({ focused, color, size }) => (
+            <View style={{
+              transform: [{ scale: focused ? 1.3 : 1 }],
+              backgroundColor: focused ? '#0A84FF' : 'transparent',
+              borderRadius: 50,
+              padding: focused ? 8 : 0,
+            }}>
+              <HomeIcon color={color} size={size} />
+            </View>
           ),
         }}
       />
@@ -51,9 +75,16 @@ function HomeTabs() {
         name="Products" 
         component={ProductsScreen}
         options={{
-          title: 'Products',
-          tabBarIcon: ({ color, size }) => (
-            <ProductsIcon color={color} size={size} />
+          title: 'Items',
+          tabBarIcon: ({ focused, color, size }) => (
+            <View style={{
+              transform: [{ scale: focused ? 1.3 : 1 }],
+              backgroundColor: focused ? '#0A84FF' : 'transparent',
+              borderRadius: 50,
+              padding: focused ? 8 : 0,
+            }}>
+              <ProductsIcon color={color} size={size} />
+            </View>
           ),
         }}
       />
@@ -62,8 +93,15 @@ function HomeTabs() {
         component={DesignScreen}
         options={{
           title: 'Design',
-          tabBarIcon: ({ color, size }) => (
-            <DesignIcon color={color} size={size} />
+          tabBarIcon: ({ focused, color, size }) => (
+            <View style={{
+              transform: [{ scale: focused ? 1.3 : 1 }],
+              backgroundColor: focused ? '#0A84FF' : 'transparent',
+              borderRadius: 50,
+              padding: focused ? 8 : 0,
+            }}>
+              <DesignIcon color={color} size={size} />
+            </View>
           ),
         }}
       />
@@ -72,8 +110,15 @@ function HomeTabs() {
         component={OrdersScreen}
         options={{
           title: 'Orders',
-          tabBarIcon: ({ color, size }) => (
-            <OrdersIcon color={color} size={size} />
+          tabBarIcon: ({ focused, color, size }) => (
+            <View style={{
+              transform: [{ scale: focused ? 1.3 : 1 }],
+              backgroundColor: focused ? '#0A84FF' : 'transparent',
+              borderRadius: 50,
+              padding: focused ? 8 : 0,
+            }}>
+              <OrdersIcon color={color} size={size} />
+            </View>
           ),
         }}
       />
@@ -81,9 +126,16 @@ function HomeTabs() {
         name="Settings" 
         component={SettingsScreen}
         options={{
-          title: 'Settings',
-          tabBarIcon: ({ color, size }) => (
-            <SettingsIcon color={color} size={size} />
+          title: 'Profile',
+          tabBarIcon: ({ focused, color, size }) => (
+            <View style={{
+              transform: [{ scale: focused ? 1.3 : 1 }],
+              backgroundColor: focused ? '#0A84FF' : 'transparent',
+              borderRadius: 50,
+              padding: focused ? 8 : 0,
+            }}>
+              <SettingsIcon color={color} size={size} />
+            </View>
           ),
         }}
       />
