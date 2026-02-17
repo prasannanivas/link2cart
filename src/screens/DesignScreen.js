@@ -9,6 +9,15 @@ import {
   StatusBar
 } from 'react-native';
 import Colors from '../constants/colors';
+import CartIcon from '../components/icons/CartIcon';
+import MenuIcon from '../components/icons/MenuIcon';
+import ShirtIcon from '../components/icons/ShirtIcon';
+import PantsIcon from '../components/icons/PantsIcon';
+import ShoesIcon from '../components/icons/ShoesIcon';
+import BagIcon from '../components/icons/BagIcon';
+import HeartIcon from '../components/icons/HeartIcon';
+import TruckIcon from '../components/icons/TruckIcon';
+import StarIcon from '../components/icons/StarIcon';
 
 export default function DesignScreen({ navigation }) {
   const [selectedSection, setSelectedSection] = useState('1');
